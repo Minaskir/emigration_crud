@@ -83,6 +83,9 @@ class EmigrantForm(forms.ModelForm):
             'reason_for_emigration': _('Причина эмиграции'),
         }
         widgets = {
+            'last_name': forms.TextInput(attrs={'required': True}),
+            'first_name': forms.TextInput(attrs={'required': True}),
+            'middle_name': forms.TextInput(attrs={'required': True}),
             'date_of_birth': DatePickerInput(options={
                 'format': 'DD.MM.YYYY',
                 'locale': 'ru',

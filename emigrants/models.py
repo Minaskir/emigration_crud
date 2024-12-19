@@ -1,5 +1,28 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+import re
+
+def validate_name(value):
+    """
+    Валидатор для ФИО:
+    - Проверяет, что значение начинается с большой буквы.
+    - Проверяет, что значение не содержит цифр.
+    - Проверяет, что значение не пустое.
+    """
+    if not value:
+        raise ValidationError('Это поле обязательно для заполнения.')
+    if not value[0].isupper():
+        raise ValidationError('Значение должно начинаться с большой буквы.')
+    if not re.match(r'^[А-Яа-яёЁ\s-]+$', value):
+        raise ValidationError('Значение должно содержать только буквы, пробелы или дефисы.')
+    if len(value.replace(' ', '').replace('-', '')) < 2:
+        raise ValidationError('Значение должно содержать не менее двух букв.')
+
+class Emigrant(models.Model):
+    last_name = models.CharField(max_length=100, verbose_name=_('Фамилия'), validators=[validate_name])
+    first_name = models.CharField(max_length=100, verbose_name=_('Имя'), validators=[validate_name])
+    middle_name = models.CharField(max_length=100, blank=True, null=True, verbose_name=_('Отчество'), validators=[validate_name])
 
 class Emigrant(models.Model):
     GENDER_CHOICES = [
@@ -52,9 +75,9 @@ class Emigrant(models.Model):
         # Добавьте другие страны по необходимости
     ]
 
-    last_name = models.CharField(max_length=100, verbose_name=_('Фамилия'))
-    first_name = models.CharField(max_length=100, verbose_name=_('Имя'))
-    middle_name = models.CharField(max_length=100, blank=True, null=True, verbose_name=_('Отчество'))
+    last_name = models.CharField(max_length=100, verbose_name=_('Фамилия'), validators=[validate_name])
+    first_name = models.CharField(max_length=100, verbose_name=_('Имя'), validators=[validate_name])
+    middle_name = models.CharField(max_length=100, blank=True, null=True, verbose_name=_('Отчество'), validators=[validate_name])
     date_of_birth = models.DateField(verbose_name=_('Дата рождения'))
     nationality = models.CharField(max_length=100, choices=NATIONALITY_CHOICES, verbose_name=_('Национальность'))
     education = models.CharField(max_length=100, choices=EDUCATION_CHOICES, verbose_name=_('Образование'))

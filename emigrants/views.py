@@ -105,6 +105,26 @@ from .models import Emigrant
 from .forms import EmigrantForm, EmigrantFilterForm
 from django.db.models import Q
 from .filters import EmigrantFilter
+from django.db import OperationalError
+from django.http import HttpResponseServerError
+def emigrant_create(request):
+    try:
+        # Искусственно выбрасываем исключение
+        raise Exception("Тестовое исключение для проверки обработки ошибок")
+
+        if request.method == 'POST':
+            form = EmigrantForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('emigrant_list')
+        else:
+            form = EmigrantForm()
+        return render(request, 'emigrants/emigrant_form.html', {'form': form})
+    except Exception as e:
+        return render(request, 'emigrants/error.html', {
+            'error_message': 'Произошла внутренняя ошибка сервера. Пожалуйста, попробуйте позже или обратитесь к администратору.',
+            'error_details': str(e)
+        }, status=500)
 
 class EmigrantListView(ListView):
     model = Emigrant
