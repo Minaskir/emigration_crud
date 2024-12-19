@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ emigrant.last_name }} {{ emigrant.first_name }} {{ emigrant.middle_name }} {% endblock %}
+
+{% block content %}
+<h1>{{ emigrant.last_name }} {{ emigrant.first_name }} {{ emigrant.middle_name }}</h1>
+<p>Дата рождения: {{ emigrant.date_of_birth }}</p>
+<p>Национальность: {{ emigrant.nationality }}</p>
+<p>Образование: {{ emigrant.get_education_display }}</p>
+<p>Ученая степень: {{ emigrant.get_academic_degree_display }}</p>
+<p>Семейное положение: {{ emigrant.get_marital_status_display }}</p>
+<p>Пол: {{ emigrant.get_gender_display }}</p>
+<p>Профессия: {{ emigrant.profession }}</p>
+<p>Страна эмиграции: {{ emigrant.country_of_emigration }}</p>
+<p>Причина эмиграции: {{ emigrant.reason_for_emigration }}</p>
+<a href="{% url 'emigrant_update' emigrant.pk %}" class="btn btn-primary">Редактировать</a>
+<a href="{% url 'emigrant_delete' emigrant.pk %}" class="btn btn-danger">Удалить</a>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+   <header>
+      <h1>Отчеты по эмиграции</h1>
+   </header>
+
+    <main>
+        <!-- Форма фильтрации -->
+        <section class="filter-section">
+            <h2>Фильтры</h2>
+            <form method="get">
+                <div class="form-group">
+                    <label for="id_gender">Пол:</label>
+                    <select id="id_gender" name="gender" class="form-control">
+                        <option value="">---------</option>
+                        {% for choice in filter_set.form.gender.field.choices %}
+                            <option value="{{ choice.0 }}" {% if choice.0 == filter_set.form.gender.value %}selected{% endif %}>{{ choice.1 }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="id_marital_status">Семейное положение:</label>
+                    <select id="id_marital_status" name="marital_status" class="form-control">
+                        <option value="">---------</option>
+                        {% for choice in filter_set.form.marital_status.field.choices %}
+                            <option value="{{ choice.0 }}" {% if choice.0 == filter_set.form.marital_status.value %}selected{% endif %}>{{ choice.1 }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="id_education">Образование:</label>
+                    <select id="id_education" name="education" class="form-control">
+                        <option value="">---------</option>
+                        {% for choice in filter_set.form.education.field.choices %}
+                            <option value="{{ choice.0 }}" {% if choice.0 == filter_set.form.education.value %}selected{% endif %}>{{ choice.1 }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="id_nationality">Национальность:</label>
+                    <select id="id_nationality" name="nationality" class="form-control">
+                        <option value="">---------</option>
+                        {% for nationality in nationalities %}
+                            <option value="{{ nationality }}" {% if nationality == filter_set.form.nationality.value %}selected{% endif %}>{{ nationality }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="id_country_of_emigration">Страна эмиграции:</label>
+                    <select id="id_country_of_emigration" name="country_of_emigration" class="form-control">
+                        <option value="">---------</option>
+                        {% for country in countries_of_emigration %}
+                            <option value="{{ country }}" {% if country == filter_set.form.country_of_emigration.value %}selected{% endif %}>{{ country }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Применить фильтр</button>
+            </form>
+        </section>
+
+        <!-- Результат фильтрации -->
+        <section class="result-section">
+            <h2>Результат фильтрации</h2>
+            <p>Эмигрантов по выбранным фильтрам: {{ total_emigrants }}</p>
+            <ul class="list-group">
+                {% for emigrant in emigrants_list %}
+                    <li class="list-group-item">
+                        <a href="{% url 'emigrant_detail' emigrant.pk %}">{{ emigrant.last_name }} {{ emigrant.first_name }} {{ emigrant.middle_name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
+{% endblock %}
+
+
+
+
+
+
+
