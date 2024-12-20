@@ -96,3 +96,9 @@ class Emigrant(models.Model):
 
     def get_academic_degree_display(self):
         return dict(self.ACADEMIC_DEGREE_CHOICES).get(self.academic_degree, self.academic_degree)
+    def get_profession_display(self):
+        return dict(self.PROFESSION_CHOICES).get(self.profession, self.profession)
+    def get_nationality_display(self):
+        return dict(self.NATIONALITY_CHOICES).get(self.nationality, self.nationality)
+    def get_country_of_emigration_display(self):
+        return dict(self.COUNTRY_OF_EMIGRATION_CHOICES).get(self.country_of_emigration, self.country_of_emigration)

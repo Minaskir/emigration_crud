@@ -8,12 +8,12 @@
 <p>Имя: {{ emigrant.first_name }}</p>
 <p>Отчество: {{ emigrant.middle_name }}</p>
 <p>Дата рождения: {{ emigrant.date_of_birth }}</p>
-<p>Национальность: {{ emigrant.nationality }}</p>
+<p>Национальность: {{ emigrant.get_nationality_display }}</p>
 <p>Образование: {{ emigrant.get_education_display }}</p>
 <p>Ученая степень: {{ emigrant.get_academic_degree_display }}</p>
 <p>Семейное положение: {{ emigrant.get_marital_status_display }}</p>
 <p>Пол: {{ emigrant.get_gender_display }}</p>
-<p>Профессия: {{ emigrant.profession }}</p>
-<p>Страна эмиграции: {{ emigrant.country_of_emigration }}</p>
+<p>Профессия: {{ emigrant.get_profession_display }}</p>
+<p>Страна эмиграции: {{ emigrant.get_country_of_emigration_display }}</p>
 <p>Причина эмиграции: {{ emigrant.reason_for_emigration }}</p>
 {% endblock %}

@@ -1,11 +1,12 @@
 from django.urls import path
 from .views import (
     EmigrantListView, EmigrantDetailView, EmigrantCreateView, EmigrantUpdateView, EmigrantDeleteView,
-    emigrant_card, emigrant_reports
+    emigrant_card, emigrant_reports, HomeView
 )
 
 urlpatterns = [
-    path('', EmigrantListView.as_view(), name='emigrant_list'),
+    path('', HomeView.as_view(), name='home'),  # Главная страница
+    path('emigrants/', EmigrantListView.as_view(), name='emigrant_list'),
     path('<int:pk>/', EmigrantDetailView.as_view(), name='emigrant_detail'),
     path('create/', EmigrantCreateView.as_view(), name='emigrant_create'),
     path('<int:pk>/update/', EmigrantUpdateView.as_view(), name='emigrant_update'),

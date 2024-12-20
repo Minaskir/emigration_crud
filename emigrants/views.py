@@ -98,7 +98,7 @@
 
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from django.utils import timezone
 from django.db.models import Count
 from .models import Emigrant
@@ -107,6 +107,8 @@ from django.db.models import Q
 from .filters import EmigrantFilter
 from django.db import OperationalError
 from django.http import HttpResponseServerError
+class HomeView(TemplateView):
+    template_name = 'emigrants/home.html'
 def emigrant_create(request):
     try:
         # Искусственно выбрасываем исключение
